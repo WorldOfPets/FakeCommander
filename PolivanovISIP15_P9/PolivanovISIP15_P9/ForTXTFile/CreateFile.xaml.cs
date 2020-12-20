@@ -35,30 +35,45 @@ namespace PolivanovISIP15_P9.ForTXTFile
 
         private void BTNCreateFileOk_Click(object sender, RoutedEventArgs e)
         {
-            string path = MainWindow.pathForCreate + FileNameForCreate.Text;
-            FileInfo fileInfo = new FileInfo(path);
-            MainWindow mainWindow = new MainWindow();
-
-            if (!fileInfo.Exists)
+            try
             {
-                fileInfo.Create();
-                MessageBox.Show("You are creat new file: " + fileInfo.Name);
+                string path = MainWindow.pathForCreate + FileNameForCreate.Text;
+                FileInfo fileInfo = new FileInfo(path);
+                MainWindow mainWindow = new MainWindow();
+
+                if (!fileInfo.Exists)
+                {
+                    fileInfo.Create();
+                    MessageBox.Show("You are creat new file: " + fileInfo.Name);
+                }
+                else
+                    MessageBox.Show("File exists.");
             }
-            else
-                MessageBox.Show("File exists.");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критичексая ошибка.");
+            }
+
         }
 
         private void BTNCreateDirect_Click(object sender, RoutedEventArgs e)
         {
-            string path = MainWindow.pathForCreate + FileNameForCreate.Text;
-            DirectoryInfo directory = new DirectoryInfo(path);
-            if (!directory.Exists)
+            try 
             {
-                directory.Create();
-                MessageBox.Show("You are create directory: " + directory.Name);
+                string path = MainWindow.pathForCreate + FileNameForCreate.Text;
+                DirectoryInfo directory = new DirectoryInfo(path);
+                if (!directory.Exists)
+                {
+                    directory.Create();
+                    MessageBox.Show("You are create directory: " + directory.Name);
+                }
+                else
+                    MessageBox.Show("Directory exists.");
             }
-            else
-                MessageBox.Show("Directory exists.");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критичексая ошибка.");
+            }
         }
     }
 }

@@ -5,130 +5,203 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PolivanovISIP15_P9"
         mc:Ignorable="d"
-        Title="Fake Commander" Height="450" Width="800">
+        BorderBrush="Aqua"
+        Title="Fake Commander" MaxHeight="450" MaxWidth="800" MinHeight="450" MinWidth="800" Closing="Window_Closing">
     <Grid>
         <StackPanel>
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF17479E" Offset="0.21"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            
             <StackPanel>
+                
                 <TextBlock
                     TextAlignment="Center"
                     HorizontalAlignment="Center"
-                    FontSize="30"
-                    Foreground="Aqua">
+                    FontSize="32"
+                    Foreground="White" 
+                    FontFamily="/PolivanovISIP15_P9;component/#Akrobat" 
+                    FontWeight="Bold">
                     Fake Commander
-                </TextBlock>   
-                
+                </TextBlock>
+
             </StackPanel>
-            
+
             <StackPanel Orientation="Horizontal">
+                
                 <ComboBox Width="40"
-                      Margin="5"
+                      Margin="5 6 5 5"
                       Height="27"
                       Name="CMB" 
                       SelectionChanged="CMB_SelectionChanged"
                       LostFocus="CMB_LostFocus">
                 </ComboBox>
-                <TextBox Height="30"
-                     Width="250"
-                     HorizontalAlignment="Left"
-                     Margin="5"
-                     VerticalAlignment="Top"
-                     Name="TBadres">
-
+                
+                <TextBox 
+                    Style="{StaticResource TBStyle}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Name="TBadres" >
+                    <TextBox.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.8"/>
+                            <GradientStop Color="Lime" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBox.Background>
                 </TextBox>
+                
                 <Button Width="40"
-                        Margin="5"
-                        Click="Button_Click">Back
+                        Height="27"
+                        Margin="5 7 5 6"
+                        Click="Button_Click"
+                        Content="Back"
+                        FontFamily="./#Akrobat" FontWeight="Bold" FontSize="16" Foreground="#FF17479E"
+                        >
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.8"/>
+                            <GradientStop Color="Lime" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
 
                 </Button>
+                
                 <ComboBox Width="40"
-                      Margin="70 0 0 0"
+                      Margin="70 6 5 5"
                       Height="27"
                       Name="CMB2" 
                       SelectionChanged="CMB_SelectionChanged"
                       LostFocus="CMB_LostFocus2">
                 </ComboBox>
-                <TextBox Height="30"
-                     Width="255"
+                
+                <TextBox 
+                    Style="{StaticResource TBStyle}"
                      HorizontalAlignment="Left"
-                     Margin="5"
                      VerticalAlignment="Top"
                      Name="TBadres2">
+                    <TextBox.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.8"/>
+                            <GradientStop Color="Lime" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBox.Background>
                 </TextBox>
+                
                 <Button Width="40"
-                        Margin="5"
-                        Click="Button_Click2">Back
+                        Height="27"
+                        Margin="5 7 5 6"
+                        Click="Button_Click2"
+                       FontFamily="./#Akrobat" FontWeight="Bold" FontSize="16" Foreground="#FF17479E">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.8"/>
+                            <GradientStop Color="Lime" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    Back
 
                 </Button>
+                
             </StackPanel>
+            
             <StackPanel Orientation="Horizontal">
+                
                 <ListView Height="270"
                           Width="350"
                           Name="ListMain"
                           Margin="5"
                           MouseDoubleClick="ListMain_MouseDoubleClick"
-                          SelectionChanged="ListMain_SelectionChanged"
-                          >
-                </ListView>
+                          SelectionChanged="ListMain_SelectionChanged" Background="White" Foreground="#FF174798" FontFamily="./#Akrobat" FontSize="14"
+                          />
+                
+                <Image Source="FontForCommander/total.png"
+                       Width="70"
+                       Height="70"
+                       Margin="-3 0 0 210">
+
+                </Image>
+                
                 <ListView Height="270"
                           Width="350"
                           Name="ListForCopy"
-                          Margin="70 0 0 0"
+                          Margin="3 0 0 0"
                           MouseDoubleClick="ListMain_MouseDoubleClick"
                           SelectionChanged="ListForCopy_SelectionChanged"
+                          Background="White" Foreground="#FF174798" FontFamily="./#Akrobat" FontSize="14"
                           >
                 </ListView>
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal">
                 
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+
                 <Button Name="OpenTxt"
-                    HorizontalAlignment="Left"
-                    Height="25"
-                    Width="120"
-                    Margin="25 5 5 5"
-                    Click="OpenTxt_Click">
+                        HorizontalAlignment="Left"
+                        Click="OpenTxt_Click" 
+                        Margin="25 5 5 5"
+                        Style="{StaticResource BTNStyle}">
                     Open
                 </Button>
+                
                 <Button Name="Delete"
-                    HorizontalAlignment="Left"
-                    Width="120"
-                    Margin="30 5 5 5"
-                    Click="Delete_Click">
+                        HorizontalAlignment="Left"
+                        Margin="30 5 5 5"
+                        Click="Delete_Click"
+                        Style="{StaticResource BTNStyle}">
                     Delete
                 </Button>
+                
                 <Button Name="Move"
-                    HorizontalAlignment="Left"
-                    Width="120"
-                    Margin="30 5 5 5"
-                    Click="Move_Click">
+                        HorizontalAlignment="Left"
+                        Margin="30 5 5 5"
+                        Click="Move_Click"
+                        Style="{StaticResource BTNStyle}">
                     Move
                 </Button>
+                
                 <Button Name="Copy"
-                    HorizontalAlignment="Left"
-                    Width="120"
-                    Margin="30 5 5 5"
-                    Click="Copy_Click">
+                        HorizontalAlignment="Left"
+                        Margin="30 5 5 5"
+                        Click="Copy_Click"
+                        Style="{StaticResource BTNStyle}">
                     Copy
                 </Button>
+                
                 <Button Name="BTNCreateFile"
-                    HorizontalAlignment="Left"
-                    Width="120"
-                    Margin="30 5 5 5"
-                    Click="CreateFile_Click">
+                        HorizontalAlignment="Left"
+                        Margin="30 5 5 5"
+                        Click="CreateFile_Click"
+                        Style="{StaticResource BTNStyle}">
                     Create
                 </Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="test"
-                       Margin="5 0 5 5">
-                    File Info:
-                </TextBlock>
-                <TextBlock Name="FileInform">
-                </TextBlock>
+                
             </StackPanel>
             
+            <StackPanel Orientation="Horizontal" Background="#FF8EFB93">
+                
+                <TextBlock 
+                    Margin="5 0 5 5" 
+                    Foreground="#FFD12B10" 
+                    FontFamily="/PolivanovISIP15_P9;component/#Akrobat" 
+                    FontSize="14" 
+                    FontWeight="Bold">
+                    File Info:
+                </TextBlock>
+                
+                <TextBlock Name="FileInform" 
+                    Foreground="#FFEC0A0A" 
+                    FontWeight="Bold" 
+                    FontFamily="/PolivanovISIP15_P9;component/#Akrobat" 
+                    FontSize="14">
+                </TextBlock>
+                
+            </StackPanel>
+
         </StackPanel>
-        
-        
+
+
     </Grid>
 </Window>

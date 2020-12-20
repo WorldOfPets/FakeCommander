@@ -11,8 +11,11 @@
             Name="FramePhoto"
             >
         </Frame>
-        <Image Name="ImageBox">
-            
-        </Image>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="38"
+                   FontFamily="/PolivanovISIP15_P9;component/#Akrobat">
+            Здесь должны открываться картинки
+        </TextBlock>
     </Grid>
 </Window>

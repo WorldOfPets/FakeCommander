@@ -10,57 +10,74 @@
         <Frame
             Name="FrmCreate">
         </Frame>
+        <StackPanel>
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF17479E" Offset="0.21"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+        </StackPanel>
         <TextBlock
             TextAlignment="Center"
-            Margin="0 5 0 100">
+            Margin="0 5 0 100" Foreground="White" FontFamily="./#Akrobat">
             Are you create new file? <LineBreak/>
             Don't forget to include the file extension. (* .txt; * .exe; *. html etc.)
         </TextBlock>
         <TextBlock
-            Margin="70 50">
+            Margin="70 50" Foreground="White" FontFamily="./#Akrobat">
             Directory:
         </TextBlock>
         <TextBlock
             Margin="125 50"
-            Name="TBPath">
+            Name="TBPath" Foreground="White" FontFamily="./#Akrobat">
             path
         </TextBlock>
-            <StackPanel Orientation="Horizontal"
+        <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <TextBlock
-                Margin="5">
+                Margin="5" FontFamily="./#Akrobat" Foreground="White" FontSize="16">
                 Name:
             </TextBlock>
             <TextBox 
                 Width="200"
                 Margin="5"
                 Text="NewFile.txt"
-                Name="FileNameForCreate">
+                Name="FileNameForCreate" Foreground="#FF09218F" FontFamily="./#Akrobat" FontSize="14">
+                <TextBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0.678"/>
+                        <GradientStop Color="#FF07F933" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBox.Background>
             </TextBox>
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom"
                     HorizontalAlignment="Center"
                     Orientation="Horizontal">
             <Button
-                Width="100"
+                Width="110"
                 Click="BTNCreateDirect_Click"
                 Name="BTNCreateDirect"
-                Margin="10 10 10 20">
+                Margin="3 10 10 20"
+                FontFamily="./#Akrobat" Background="#FF17479E" Foreground="White" FontSize="14">
                 Create Directoty
             </Button>
             <Button
-                Width="100"
+                Width="110"
                 Click="BTNCreateFileOk_Click"
                 Name="BTNCreateFileOk"
-                Margin="10 10 10 20">
+                Margin="5 10 10 20"
+                FontFamily="./#Akrobat" Background="#FF17479E" Foreground="White" FontSize="14">
                 Create File
             </Button>
             <Button
-                Width="100"
+                Width="110"
                 Name="BTNCancel"
-                Margin="10 10 10 20"
-                Click="BTNCancel_Click">
+                Margin="5 10 10 20"
+                Click="BTNCancel_Click"
+                FontFamily="./#Akrobat" Background="#FF17479E" Foreground="White" FontSize="14">
                 Cancel
             </Button>
         </StackPanel>

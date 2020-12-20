@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace PolivanovISIP15_P9.ClassesTC
 {
@@ -27,7 +28,7 @@ namespace PolivanovISIP15_P9.ClassesTC
         { 
             if(listItem.ToString() != "")
             { 
-            tb += Convert.ToString(listItem) + "\\";
+                tb += Convert.ToString(listItem) + "\\";
             }
             string path = tb.ToString();
             int correct = tb.Length;

@@ -26,85 +26,185 @@ namespace PolivanovISIP15_P9
         public MainWindow()
         {
             InitializeComponent();
-            DriveInfo[] drives = DriveInfo.GetDrives();
-            foreach (DriveInfo drive in drives)
+            try
             {
-                CMB.Items.Add(drive.Name);
-                CMB2.Items.Add(drive.Name);
+                DriveInfo[] drives = DriveInfo.GetDrives();
+                string path = "";
+                foreach (DriveInfo drive in drives)
+                {
+                    if (path == "") { path = drive.Name; }
+                    CMB.Items.Add(drive.Name);
+                    CMB2.Items.Add(drive.Name);
+                }
+                #region Инициализация листов
+                int correct = path.Length;
+                TBadres.Text = path + "\\";
+                TBadres2.Text = path + "\\";
+                string[] dirsPath = Directory.GetDirectories(path);
+                string[] filesPath = Directory.GetFiles(path);
+                string[] all = dirsPath.Concat(filesPath).ToArray();
+                string[] allcorrect = new string[all.Length];
+                for (int j = 0; j < all.Length; j++)
+                {
+                    string s = Convert.ToString(all[j]);
+                    allcorrect[j] = s.Remove(0, correct);
+                }
+                ListMain.ItemsSource = allcorrect;
+                ListForCopy.ItemsSource = allcorrect;
+                #endregion
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
+            
 
         }
+        #region Переменные
         public string location { get; set; }
         public string ForSavePath { get; set; }
         public string ForSavePath1 { get; set; }
         public string ForSavePath2 { get; set; }
+        public static string proverka { get; set; }
+        public string pathForCopyAndDeleteFile { get; set; }
+        public static string pathForCreate { get; set; }
+        #endregion
+
+        #region Двойной клик
         public void ListMain_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (location == "1")
+            try
             {
-                ForSavePath += Convert.ToString(ListMain.SelectedItem) + "\\";
-                if (System.IO.Directory.Exists(ForSavePath))
+                OpenTXTFile openTXTFile = new OpenTXTFile();
+                if (location == "1")
                 {
-                    ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, ListMain.SelectedItem);
-                    TBadres.Text = ForSavePath;
+                    ForSavePath += Convert.ToString(ListMain.SelectedItem) + "\\";
+                    if (Directory.Exists(ForSavePath))
+                    {
+                        ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, ListMain.SelectedItem);
+                        TBadres.Text = ForSavePath;
+                    }
+                    else
+                    {
+                        ForSavePath1 = ListMain.SelectedItem.ToString();
+                        string path = TBadres.Text + ListMain.SelectedItem.ToString();
+                        FileInfo info = new FileInfo(path);
+                        if (info.Extension == ".txt")
+                        {
+                            pathForCreate = path;
+                            StreamReader sr = new StreamReader(path, Encoding.Default);
+                            openTXTFile.Show();
+                            openTXTFile.TBtxt.Text = sr.ReadToEnd();
+                            proverka = openTXTFile.TBtxt.Text;
+                        }
+                    }
+                }
+                else if (location == "2")
+                {
+                    ForSavePath2 += Convert.ToString(ListForCopy.SelectedItem) + "\\";
+                    if (System.IO.Directory.Exists(ForSavePath2))
+                    {
+                        ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, ListForCopy.SelectedItem);
+                        TBadres2.Text = ForSavePath2;
+                    }
+                    else if (System.IO.File.Exists(ForSavePath2))
+                    {
+                        ForSavePath1 = ListMain.SelectedItem.ToString();
+                        string path = TBadres2.Text + ListMain.SelectedItem.ToString();
+                        FileInfo info = new FileInfo(path);
+                        if (info.Extension == ".txt")
+                        {
+                            pathForCreate = path;
+                            StreamReader sr = new StreamReader(path, Encoding.Default);
+                            openTXTFile.Show();
+                            openTXTFile.TBtxt.Text = sr.ReadToEnd();
+                            proverka = openTXTFile.TBtxt.Text;
+                        }
+                    }
                 }
             }
-            else if (location == "2")
+            catch (Exception ex)
             {
-                ForSavePath2 += Convert.ToString(ListForCopy.SelectedItem) + "\\";
-                if (System.IO.Directory.Exists(ForSavePath2))
-                {
-                    ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, ListForCopy.SelectedItem);
-                    TBadres2.Text = ForSavePath2;
-                }
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
             }
         }
+#endregion
 
+        #region Комбобоксы
         private void CMB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {           
-            if (location == "1")
+        {
+            try 
             {
-                TBadres.Text = "";
-                ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, CMB.SelectedValue.ToString());
-                TBadres.Text = CMB.SelectedValue.ToString() + "\\";
-                ForSavePath = TBadres.Text;
+                if (location == "1")
+                {
+                    TBadres.Text = "";
+                    ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, CMB.SelectedValue.ToString());
+                    TBadres.Text = CMB.SelectedValue.ToString() + "\\";
+                    ForSavePath = TBadres.Text;
+                }
+                else if (location == "2")
+                {
+                    TBadres2.Text = "";
+                    ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, CMB2.SelectedValue.ToString());
+                    TBadres2.Text = CMB2.SelectedValue.ToString() + "\\";
+                    ForSavePath2 = TBadres2.Text;
+                }
             }
-            else if (location == "2")
+            catch (Exception ex)
             {
-                TBadres2.Text = "";
-                ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, CMB2.SelectedValue.ToString());
-                TBadres2.Text = CMB2.SelectedValue.ToString() + "\\";
-                ForSavePath2 = TBadres2.Text;
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
             }
         }
+        #endregion
 
+        #region Кнопки назад
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TBadres.Text = CMB.SelectedValue.ToString() + "\\";
-            ForSavePath = TBadres.Text;
-            ListMain.ItemsSource = CorrectFile.correctF((CMB.SelectedValue.ToString() + "\\"), TBadres.Text.Length); 
+            try 
+            {
+                TBadres.Text = CMB.SelectedValue.ToString() + "\\";
+                ForSavePath = TBadres.Text;
+                ListMain.ItemsSource = CorrectFile.correctF((CMB.SelectedValue.ToString() + "\\"), TBadres.Text.Length);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
         }
         private void Button_Click2(object sender, RoutedEventArgs e)
         {
-            TBadres2.Text = CMB2.SelectedValue.ToString() + "\\";
-            ForSavePath2 = TBadres2.Text;
-            ListForCopy.ItemsSource = CorrectFile.correctF((CMB2.SelectedValue.ToString() + "\\"), TBadres2.Text.Length);
+            try
+            {
+                TBadres2.Text = CMB2.SelectedValue.ToString() + "\\";
+                ForSavePath2 = TBadres2.Text;
+                ListForCopy.ItemsSource = CorrectFile.correctF((CMB2.SelectedValue.ToString() + "\\"), TBadres2.Text.Length);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
         }
+        #endregion
 
-        public string pathForCopyAndDeleteFile { get; set; }
+        #region Определяем в каком листе находится пользователь
         private void ListMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            location = "1";
-            FileInform.Text = Convert.ToString(ListMain.SelectedItem);
-            string path = TBadres.Text + FileInform.Text;
-            pathForCopyAndDeleteFile = path;
-            FileInfo info = new FileInfo(path);
-            if (info.Exists)
+            //Информация о файле
+            try
             {
-                FileInform.Text = info.Name + "  Размер: " + info.Length + "  Расширение: " + info.Extension + "  Дата создания: " + info.CreationTime;
+                location = "1";
+                FileInform.Text = Convert.ToString(ListMain.SelectedItem);
+                string path = TBadres.Text + FileInform.Text;
+                FileInfo info = new FileInfo(path);
+                if (info.Exists)
+                {
+                    FileInform.Text = info.Name + "  Размер: " + info.Length + "  Расширение: " + info.Extension + "  Дата создания: " + info.CreationTime;
+                }
             }
-            
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
         }
 
         private void CMB_LostFocus(object sender, RoutedEventArgs e)
@@ -117,158 +217,203 @@ namespace PolivanovISIP15_P9
         }
         private void ListForCopy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            location = "2";
-            FileInform.Text = Convert.ToString(ListForCopy.SelectedItem);
-            string path = TBadres2.Text + FileInform.Text;
-            pathForCopyAndDeleteFile = path;
-            FileInfo info = new FileInfo(path);
-            if (info.Exists)
+            //Информация о файле
+            try
             {
-                FileInform.Text = info.Name + "  Размер: " + info.Length + "  Расширение: " + info.Extension + "  Дата создания: " + info.CreationTime;
+                location = "2";
+                FileInform.Text = Convert.ToString(ListForCopy.SelectedItem);
+                string path = TBadres2.Text + FileInform.Text;
+                pathForCopyAndDeleteFile = path;
+                FileInfo info = new FileInfo(path);
+                if (info.Exists)
+                {
+                    FileInform.Text = info.Name + "  Размер: " + info.Length + "  Расширение: " + info.Extension + "  Дата создания: " + info.CreationTime;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
             }
         }
+        #endregion
 
+        #region Открытие фото
         private void OpenTxt_Click(object sender, RoutedEventArgs e)
         {
-            OpenTXTFile openTXTFile = new OpenTXTFile();
-            //openPhoto openP = new openPhoto();
-            ForSavePath1 = TBadres.Text + ListMain.SelectedItem.ToString();
-            pathForCreate = ForSavePath1;
-            FileInfo fileInfo = new FileInfo(ForSavePath1);
-            StreamReader sr = new StreamReader(ForSavePath1, Encoding.Default);
-            if (fileInfo.Extension != "TXT")
-            {
-                //openP.Show();
-                //Image image = new Image();
-                //BitmapImage bitmapImage = new BitmapImage();
-                //bitmapImage.BeginInit();
-                //bitmapImage.UriSource = new Uri(ForSavePath1, UriKind.Relative);
-                //bitmapImage.EndInit();
-                //image.Source = bitmapImage;
-                //image.Stretch = Stretch.Uniform;
-                //openP.ImageBox.Source = bitmapImage;
-                //openP.ImageBox.Stretch = Stretch.Uniform;
-            }
-            else
-            {
-                openTXTFile.Show();
-                openTXTFile.TBtxt.Text = sr.ReadToEnd();
-            }
-            
+            //OpenTXTFile openTXTFile = new OpenTXTFile();
+            openPhoto openP = new openPhoto();
+            //ForSavePath1 = TBadres.Text + ListMain.SelectedItem.ToString();
+            //pathForCreate = ForSavePath1;
+            //FileInfo fileInfo = new FileInfo(ForSavePath1);
+            //StreamReader sr = new StreamReader(ForSavePath1, Encoding.Default);
+            openP.Show();
+            //Image image = new Image();
+            //BitmapImage bitmapImage = new BitmapImage();
+            //bitmapImage.BeginInit();
+            //bitmapImage.UriSource = new Uri(ForSavePath1, UriKind.Relative);
+            //bitmapImage.EndInit();
+            //image.Source = bitmapImage;
+            //image.Stretch = Stretch.Uniform;
+            //openP.ImageBox.Source = bitmapImage;
+            //openP.ImageBox.Stretch = Stretch.Uniform;
+            //openTXTFile.Show();
+            //openTXTFile.TBtxt.Text = sr.ReadToEnd();
         }
+        #endregion
 
+        #region Удаление файла
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (location == "1") 
+            try
             {
-                string path = TBadres.Text + Convert.ToString(ListMain.SelectedItem);
-                pathForCopyAndDeleteFile = path;
-                FileInfo info = new FileInfo(path);
-                if (info.Exists)
+                if (location == "1")
                 {
-                    MessageBoxResult result = MessageBox.Show(
-                        "You seriously want to delete this file: " + info.Name,
-                        "Delete",
-                        MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
+                    string path = TBadres.Text + Convert.ToString(ListMain.SelectedItem);
+                    pathForCopyAndDeleteFile = path;
+                    FileInfo info = new FileInfo(path);
+                    if (info.Exists)
                     {
-                        info.Delete();
-                        ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
-                    }
-                }
-            }
-            if (location == "2")
-            {
-                string path = TBadres2.Text + Convert.ToString(ListForCopy.SelectedItem);
-                pathForCopyAndDeleteFile = path;
-                FileInfo info = new FileInfo(path);
-                if (info.Exists)
-                {
-                    MessageBoxResult result = MessageBox.Show(
-                        "You seriously want to delete the file: " + info.Name,
-                        "Delete",
-                        MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        info.Delete();
-                        ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
-                    }
-                }
-            }
-
-        }
-
-        private void Move_Click(object sender, RoutedEventArgs e)
-        {
-            if (TBadres.Text != "" && TBadres2.Text != "")
-            {
-                if (location == "1") 
-                {
-                    string path = TBadres.Text + ListMain.SelectedItem.ToString();
-                    string newPath = TBadres2.Text + ListMain.SelectedItem.ToString();
-                    FileInfo fileInfo = new FileInfo(path);
-                    if (fileInfo.Exists)
-                    {
-                        File.Move(path, newPath);
-                        ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
-                        ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
+                        MessageBoxResult result = MessageBox.Show(
+                            "You seriously want to delete this file: " + info.Name,
+                            "Delete",
+                            MessageBoxButton.YesNo);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            info.Delete();
+                            ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
+                        }
                     }
                 }
                 if (location == "2")
                 {
-                    string path = TBadres2.Text + ListForCopy.SelectedItem.ToString();
-                    string newPath = TBadres.Text + ListForCopy.SelectedItem.ToString();
-                    FileInfo fileInfo = new FileInfo(path);
-                    if (fileInfo.Exists)
+                    string path = TBadres2.Text + Convert.ToString(ListForCopy.SelectedItem);
+                    pathForCopyAndDeleteFile = path;
+                    FileInfo info = new FileInfo(path);
+                    if (info.Exists)
                     {
-                        File.Move(path, newPath);
+                        MessageBoxResult result = MessageBox.Show(
+                            "You seriously want to delete the file: " + info.Name,
+                            "Delete",
+                            MessageBoxButton.YesNo);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            info.Delete();
+                            ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
+        }
+        #endregion
+
+        #region Перемещение
+        private void Move_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (TBadres.Text != "" && TBadres2.Text != "")
+                {
+                    if (location == "1")
+                    {
+                        string path = TBadres.Text + ListMain.SelectedItem.ToString();
+                        string newPath = TBadres2.Text + ListMain.SelectedItem.ToString();
+                        FileInfo fileInfo = new FileInfo(path);
+                        if (fileInfo.Exists)
+                        {
+                            File.Move(path, newPath);
+                            ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
+                            ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
+                        }
+                    }
+                    if (location == "2")
+                    {
+                        string path = TBadres2.Text + ListForCopy.SelectedItem.ToString();
+                        string newPath = TBadres.Text + ListForCopy.SelectedItem.ToString();
+                        FileInfo fileInfo = new FileInfo(path);
+                        if (fileInfo.Exists)
+                        {
+                            File.Move(path, newPath);
+                            ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
+                            ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
+
+        }
+        #endregion
+
+        #region Копирование
+        private void Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (location == "1")
+                {
+                    string path = TBadres.Text + ListMain.SelectedItem.ToString();
+                    string newPath = TBadres2.Text + ListMain.SelectedItem.ToString();
+                    FileInfo fileInfo = new FileInfo(path);
+                    FileInfo fileInfo2 = new FileInfo(newPath);
+                    if (fileInfo.Exists && !fileInfo2.Exists)
+                    {
+                        File.Copy(path, newPath, true);
                         ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
+                    }
+
+                }
+                if (location == "2")
+                {
+
+                    string path = TBadres2.Text + ListMain.SelectedItem.ToString();
+                    string newPath = TBadres.Text + ListMain.SelectedItem.ToString();
+                    FileInfo fileInfo = new FileInfo(path);
+                    FileInfo fileInfo2 = new FileInfo(newPath);
+                    if (fileInfo.Exists && !fileInfo2.Exists)
+                    {
+                        File.Copy(path, newPath, true);
                         ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
                     }
                 }
-
             }
-
-        }
-
-        private void Copy_Click(object sender, RoutedEventArgs e)
-        {
-            if (location == "1")
+            catch (Exception ex)
             {
-                string path = TBadres.Text + ListMain.SelectedItem.ToString();
-                string newPath = TBadres2.Text + ListMain.SelectedItem.ToString();
-                FileInfo fileInfo = new FileInfo(path);
-                FileInfo fileInfo2 = new FileInfo(newPath);
-                if (fileInfo.Exists && !fileInfo2.Exists)
-                {
-                    File.Copy(path, newPath, true);
-                    ListForCopy.ItemsSource = CorrectFile.methodForList(TBadres2.Text, "");
-                }
-            }
-            if (location == "2")
-            {
-                string path = TBadres2.Text + ListMain.SelectedItem.ToString();
-                string newPath =  TBadres.Text + ListMain.SelectedItem.ToString();
-                FileInfo fileInfo = new FileInfo(path);
-                FileInfo fileInfo2 = new FileInfo(newPath);
-                if (fileInfo.Exists && !fileInfo2.Exists)
-                {
-                    File.Copy(path, newPath, true);
-                    ListMain.ItemsSource = CorrectFile.methodForList(TBadres.Text, "");
-                }
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
             }
         }
+        #endregion
 
-        public static string pathForCreate { get; set; }
+        #region Создание
         private void CreateFile_Click(object sender, RoutedEventArgs e)
         {
-            if (TBadres.Text != "")
+            try
             {
-                pathForCreate = TBadres.Text;
-                CreateFile cf = new CreateFile();
-                cf.Show();
+                if (TBadres.Text != "")
+                {
+                    pathForCreate = TBadres.Text;
+                    CreateFile cf = new CreateFile();
+                    cf.Show();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
+        }
 
+        #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            App.Current.Shutdown();
         }
     }
 }

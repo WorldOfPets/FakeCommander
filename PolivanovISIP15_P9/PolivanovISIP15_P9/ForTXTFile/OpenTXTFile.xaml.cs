@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 namespace PolivanovISIP15_P9.ForTXTFile
 {
     /// <summary>
@@ -27,11 +26,27 @@ namespace PolivanovISIP15_P9.ForTXTFile
 
         private void BTNSave_Click(object sender, RoutedEventArgs e)
         {
-            using (StreamWriter sw = new StreamWriter(MainWindow.pathForCreate, false, Encoding.Default))
+            try
             {
-                sw.WriteLine(TBtxt.Text);
+                if (MainWindow.proverka != TBtxt.Text)
+                {
+                    using (StreamWriter sw = new StreamWriter(MainWindow.pathForCreate, false, Encoding.Default))
+                    {
+                        sw.WriteLine(TBtxt.Text);
+                    }
+                    MainWindow.pathForCreate = "";
+                    MainWindow.proverka = "";
+                    this.Close();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
-            this.Close();
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Критическая ошибка.");
+            }
         }
     }
 }

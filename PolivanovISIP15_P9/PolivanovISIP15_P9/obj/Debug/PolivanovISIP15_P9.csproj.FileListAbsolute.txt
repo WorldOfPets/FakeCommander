@@ -31,7 +31,6 @@ C:\Users\Поливанов\Downloads\PolivanovISIP15_P9\PolivanovISIP15_P9\Poli
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\bin\Debug\PolivanovISIP15_P9.exe.config
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\bin\Debug\PolivanovISIP15_P9.exe
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\bin\Debug\PolivanovISIP15_P9.pdb
-C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\PolivanovISIP15_P9.csprojAssemblyReference.cache
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\MainWindow.g.cs
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\App.g.cs
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\PolivanovISIP15_P9_MarkupCompile.cache
@@ -49,3 +48,5 @@ C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\ForTXTFile\CreateFile.baml
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\ForTXTFile\openPhoto.g.cs
 C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\ForTXTFile\openPhoto.baml
+C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\App.baml
+C:\Users\admin_user\Desktop\HomeWork\ОАиП\PolivanovISIP15_P9\PolivanovISIP15_P9\PolivanovISIP15_P9\obj\Debug\PolivanovISIP15_P9.csprojAssemblyReference.cache
